@@ -5,6 +5,7 @@ package ru.job4j.condition;
  * @version $Id$
  * @since 0.1
  */
+
 public class Point {
     private int x;
     private int y;
