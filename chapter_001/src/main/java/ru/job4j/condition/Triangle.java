@@ -41,7 +41,7 @@ public class Triangle {
         double ac = this.a.distanceTo(this.c);
         double bc = this.b.distanceTo(this.c);
         double p = this.period(ab, ac, bc);
-        if (this.exist(ab, ac, bc, p)) {
+        if (this.exist(ab, ac, bc)) {
             rsl = Math.sqrt(((p - ab) * (p - ac) * (p - bc)) * p);
         }
         return rsl;
@@ -53,10 +53,9 @@ public class Triangle {
      * @param ab Длина от точки a b.
      * @param ac Длина от точки a c.
      * @param bc Длина от точки b c.
-     * @param p Полупериметр треугольника.
      * @return правду или ложь
      */
-    private boolean exist(double ab, double ac, double bc, double p) {
-        return ((ab + ac != bc) & (ab + bc != ac) & (ac + bc != ab) & (p > ab) & (p > ac) & (p > bc));
+    private boolean exist(double ab, double ac, double bc) {
+        return (ab + ac > bc) & (ab + bc > ac) & (ac + bc > ab);
     }
 }
