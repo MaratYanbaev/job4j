@@ -14,23 +14,23 @@ public class BoardTest {
     public void whenPaintBoardWithWidthThreeAndHeightThreeThenStringWithThreeColsAndThreeRows() {
         Board board = new Board();
         String rsl = board.paint(3, 3);
-        String In = System.lineSeparator();
-        assertThat(rsl, is(String.format("X X%s X %sX X%s", In, In, In)));
+        String in = System.lineSeparator();
+        assertThat(rsl, is(String.format("X X%s X %sX X%s", in, in, in)));
     }
 
     @Test
     public void whenPaintBoardWithWidthFiveAndHeightFourThenStringWithFiveColsAndFourRows() {
         Board board = new Board();
         String rsl = board.paint(5, 4);
-        String In = System.lineSeparator();
-        assertThat(rsl, is(String.format("X X X%s X X %sX X X%s X X %s", In, In, In, In)));
+        String in = System.lineSeparator();
+        assertThat(rsl, is(String.format("X X X%s X X %sX X X%s X X %s", in, in, in, in)));
     }
 
     @Test
     public void whenPaintBoardWithWidthFourAndHeightFourThenStringWithFourColsAndFourRows() {
         Board board = new Board();
         String rsl = board.paint(4, 4);
-        String In = System.lineSeparator();
-        assertThat(rsl, is(String.format("X X %s X X%sX X %s X X%s", In, In, In, In)));
+        String in = System.lineSeparator();
+        assertThat(rsl, is(String.format("X X %s X X%sX X %s X X%s", in, in, in, in)));
     }
 }
