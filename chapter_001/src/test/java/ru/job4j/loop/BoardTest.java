@@ -25,4 +25,12 @@ public class BoardTest {
         String In = System.lineSeparator();
         assertThat(rsl, is(String.format("X X X%s X X %sX X X%s X X %s", In, In, In, In)));
     }
+
+    @Test
+    public void whenPaintBoardWithWidthFourAndHeightFourThenStringWithFourColsAndFourRows() {
+        Board board = new Board();
+        String rsl = board.paint(4, 4);
+        String In = System.lineSeparator();
+        assertThat(rsl, is(String.format("X X %s X X%sX X %s X X%s", In, In, In, In)));
+    }
 }
