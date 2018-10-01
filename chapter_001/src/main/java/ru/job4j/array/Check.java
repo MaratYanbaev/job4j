@@ -12,12 +12,13 @@ public class Check {
      * @return - вернет является ли массив true или false
      */
     public boolean mono(boolean[] data) {
-        int time = data.length;
-        for (boolean fOrT: data) {
-            if (!fOrT) {
-                time--;
+        boolean result = true;
+        for (boolean aData : data) {
+            if (data[0] != aData) {
+                result = false;
+                break;
             }
         }
-        return time == 0 | time == data.length;
+        return result;
     }
 }
