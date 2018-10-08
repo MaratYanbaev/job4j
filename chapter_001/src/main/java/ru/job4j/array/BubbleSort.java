@@ -9,19 +9,19 @@ public class BubbleSort {
 
     /**
      * Метод сортировки массива.
-     * @param sort - массив для сортировки.
+     * @param array - массив для сортировки.
      * @return - sorted array.
      */
-    public int[] bubbleSort(int[] sort) {
-        for (int loop = sort.length - 1; loop > 0; loop--){
-            for (int inLoop = 0; inLoop < loop; inLoop++ ) {
-                if (sort[inLoop] > sort[inLoop + 1]) {
-                    int buf = sort[inLoop];
-                    sort[inLoop] = sort[inLoop + 1];
-                    sort[inLoop + 1] = buf;
+    public int[] arraySort(int[] array) {
+        for (int outLoop = array.length - 1; outLoop > 0; outLoop--) {
+            for (int inLoop = 0; inLoop < outLoop; inLoop++) {
+                if (array[inLoop] > array[inLoop + 1]) {
+                    int buf = array[inLoop];
+                    array[inLoop] = array[inLoop + 1];
+                    array[inLoop + 1] = buf;
                 }
             }
         }
-        return sort;
+        return array;
     }
 }

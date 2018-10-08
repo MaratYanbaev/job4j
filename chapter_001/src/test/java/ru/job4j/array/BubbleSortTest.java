@@ -13,11 +13,11 @@ import static org.junit.Assert.assertThat;
  */
 public class BubbleSortTest {
     @Test
-    public void whenSortArrayWithTenElementsThenSortedArray() {
-        BubbleSort bubble = new BubbleSort();
-        int res[] = {1, 5, 4, 2, 3, 1, 7, 8, 0, 5};
-        bubble.bubbleSort (res);
-        int result[] = {0, 1, 1, 2, 3, 4, 5, 5, 7, 8};
-        assertThat(result, is(res));
+    public void whenSortArrayWithTenElementsThenGetSortedArray() {
+        BubbleSort sortArray = new BubbleSort();
+        int[] array = {1, 5, 4, 2, 3, 1, 7, 8, 0, 5};
+        sortArray.arraySort(array);
+        int[] model = {0, 1, 1, 2, 3, 4, 5, 5, 7, 8};
+        assertThat(model, is(array));
     }
 }

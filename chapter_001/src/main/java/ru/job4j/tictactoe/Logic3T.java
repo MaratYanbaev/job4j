@@ -17,38 +17,38 @@ public class Logic3T {
      * @return if winner X then true else false.
      */
     public boolean isWinnerX() {
-        int value = 0;
+        int cell = 0;
         for (int first = 0, second = 0; first < table.length; first++, second++) {
             if (table[first][second].hasMarkX()) {
-                value++;
-                if (value == 3) {
+                cell++;
+                if (cell == 3) {
                     return true;
                 }
             }
         }
-        value = 0;
+        cell = 0;
         for (int first = table.length - 1, second = 0; first >= 0; first--, second++) {
             if (table[first][second].hasMarkX()) {
-                value++;
-                if (value == 3) {
+                cell++;
+                if (cell == 3) {
                     return true;
                 }
             }
         }
-        value = 0;
-        for (int vertical = 0; vertical < table.length; vertical++) {
-            value = 0;
-            for (int first = 0; first < table.length; first++) {
-                if (table[first][vertical].hasMarkX()) {
-                    value++;
-                    if (value == 3) {
+        cell = 0;
+        for (int index = 0; index < table.length; index++) {
+            cell = 0;
+            for (Figure3T[] column : table) {
+                if (column[index].hasMarkX()) {
+                    cell++;
+                    if (cell == 3) {
                         return true;
                     }
                 }
             }
         }
-        for (Figure3T[] horizon : table) {
-            if (horizon[0].hasMarkX() && horizon[1].hasMarkX() && horizon[2].hasMarkX()) {
+        for (Figure3T[] row : table) {
+            if (row[0].hasMarkX() && row[1].hasMarkX() && row[2].hasMarkX()) {
                 return true;
             }
         }
@@ -60,38 +60,38 @@ public class Logic3T {
      * @return if winner O then true else false.
      */
     public boolean isWinnerO() {
-        int value = 0;
+        int cell = 0;
         for (int first = 0, second = 0; first < table.length; first++, second++) {
             if (table[first][second].hasMarkO()) {
-                value++;
-                if (value == 3) {
+                cell++;
+                if (cell == 3) {
                     return true;
                 }
             }
         }
-        value = 0;
+        cell = 0;
         for (int first = table.length - 1, second = 0; first >= 0; first--, second++) {
             if (table[first][second].hasMarkO()) {
-                value++;
-                if (value == 3) {
+                cell++;
+                if (cell == 3) {
                     return true;
                 }
             }
         }
-        value = 0;
-        for (int vertic = 0; vertic < table.length; vertic++) {
-            value = 0;
-            for (int first = 0; first < table.length; first++) {
-                if (table[first][vertic].hasMarkO()) {
-                    value++;
-                    if (value == 3) {
+        cell = 0;
+        for (int index = 0; index < table.length; index++) {
+            cell = 0;
+            for (Figure3T[] column : table) {
+                if (column[index].hasMarkO()) {
+                    cell++;
+                    if (cell == 3) {
                         return true;
                     }
                 }
             }
         }
-        for (Figure3T[] horizon: table) {
-            if (horizon[0].hasMarkO() && horizon[1].hasMarkO() && horizon[2].hasMarkO()) {
+        for (Figure3T[] row : table) {
+            if (row[0].hasMarkO() && row[1].hasMarkO() && row[2].hasMarkO()) {
                 return true;
             }
         }
@@ -103,9 +103,9 @@ public class Logic3T {
      * @return if has gap true else false.
      */
     public boolean hasGap() {
-        for (Figure3T[] gapOut :table) {
-            for (Figure3T gapIn:gapOut) {
-                if (!gapIn.hasMarkO() && !gapIn.hasMarkX()) {
+        for (Figure3T[] outer :table) {
+            for (Figure3T inner:outer) {
+                if (!inner.hasMarkO() && !inner.hasMarkX()) {
                     return true;
                 }
             }
