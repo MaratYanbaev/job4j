@@ -6,8 +6,8 @@ package ru.job4j.tictactoe;
  * @since 08.10.2018
  */
 public class Logic3T {
+    private boolean result = false;
     private final Figure3T[][] table;
-
     public Logic3T(Figure3T[][] table) {
         this.table = table;
     }
@@ -18,11 +18,11 @@ public class Logic3T {
      */
     public boolean isWinnerX() {
         int cell = 0;
-        for (int first = 0, second = 0; first < table.length; first++, second++) {
-            if (table[first][second].hasMarkX()) {
+        for (int index = 0; index < table.length; index++) {
+            if (table[index][index].hasMarkX()) {
                 cell++;
-                if (cell == 3) {
-                    return true;
+                if (cell == table.length) {
+                    result = true;
                 }
             }
         }
@@ -30,8 +30,8 @@ public class Logic3T {
         for (int first = table.length - 1, second = 0; first >= 0; first--, second++) {
             if (table[first][second].hasMarkX()) {
                 cell++;
-                if (cell == 3) {
-                    return true;
+                if (cell == table.length) {
+                    result = true;
                 }
             }
         }
@@ -41,18 +41,23 @@ public class Logic3T {
             for (Figure3T[] column : table) {
                 if (column[index].hasMarkX()) {
                     cell++;
-                    if (cell == 3) {
-                        return true;
+                    if (cell == column.length) {
+                        result = true;
                     }
                 }
             }
         }
         for (Figure3T[] row : table) {
-            if (row[0].hasMarkX() && row[1].hasMarkX() && row[2].hasMarkX()) {
-                return true;
+            for (int index = row.length - 1; index >= 0; index--) {
+                if (row[index].hasMarkX()) {
+                    cell++;
+                    if (cell == row.length) {
+                        result = true;
+                    }
+                }
             }
         }
-        return false;
+        return result;
     }
 
     /**
@@ -61,11 +66,11 @@ public class Logic3T {
      */
     public boolean isWinnerO() {
         int cell = 0;
-        for (int first = 0, second = 0; first < table.length; first++, second++) {
-            if (table[first][second].hasMarkO()) {
+        for (int index = 0; index < table.length; index++) {
+            if (table[index][index].hasMarkO()) {
                 cell++;
-                if (cell == 3) {
-                    return true;
+                if (cell == table.length) {
+                    result = true;
                 }
             }
         }
@@ -73,8 +78,8 @@ public class Logic3T {
         for (int first = table.length - 1, second = 0; first >= 0; first--, second++) {
             if (table[first][second].hasMarkO()) {
                 cell++;
-                if (cell == 3) {
-                    return true;
+                if (cell == table.length) {
+                    result = true;
                 }
             }
         }
@@ -84,18 +89,23 @@ public class Logic3T {
             for (Figure3T[] column : table) {
                 if (column[index].hasMarkO()) {
                     cell++;
-                    if (cell == 3) {
-                        return true;
+                    if (cell == column.length) {
+                        result = true;
                     }
                 }
             }
         }
         for (Figure3T[] row : table) {
-            if (row[0].hasMarkO() && row[1].hasMarkO() && row[2].hasMarkO()) {
-                return true;
+            for (int index = row.length - 1; index >= 0; index--) {
+                if (row[index].hasMarkO()) {
+                    cell++;
+                    if (cell == row.length) {
+                        result = true;
+                    }
+                }
             }
         }
-        return false;
+        return result;
     }
 
     /**
@@ -106,10 +116,10 @@ public class Logic3T {
         for (Figure3T[] outer :table) {
             for (Figure3T inner:outer) {
                 if (!inner.hasMarkO() && !inner.hasMarkX()) {
-                    return true;
+                    result = true;
                 }
             }
         }
-        return false;
+        return result;
     }
 }
