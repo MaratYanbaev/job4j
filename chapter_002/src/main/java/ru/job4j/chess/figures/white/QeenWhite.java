@@ -1,4 +1,4 @@
-package ru.job4j.chess.figures.black;
+package ru.job4j.chess.figures.white;
 
 import ru.job4j.chess.figures.Cell;
 import ru.job4j.chess.figures.Figure;
@@ -23,7 +23,7 @@ public class QeenWhite implements Figure {
 
     @Override
     public Cell[] way(Cell source, Cell dest) {
-        return new Cell[] { dest };
+        return null;
     }
 
     @Override

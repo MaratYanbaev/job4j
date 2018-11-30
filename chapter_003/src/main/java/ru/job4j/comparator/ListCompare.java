@@ -2,14 +2,14 @@ package ru.job4j.comparator;
 
 import java.util.Comparator;
 
-public class ListComparator implements Comparator<String> {
+public class ListCompare implements Comparator<String> {
 
     @Override
     public int compare(String left, String right) {
-        int l = left.length() > right.length() ? left.length() : right.length();
+        int l = left.length() < right.length() ? left.length() : right.length();
         int i = 0;
         for (int k = 0; k < l; k++) {
-            if (!(left.charAt(k) / right.charAt(k) == 0)) {
+            if (!(left.charAt(k) == right.charAt(k))) {
                 i = left.charAt(k) > right.charAt(k) ? 1 : -1;
                 break;
             }

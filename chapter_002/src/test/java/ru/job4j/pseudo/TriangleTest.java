@@ -1,4 +1,4 @@
-package ru.job4j.figure;
+package ru.job4j.pseudo;
 
 import org.junit.Test;
 

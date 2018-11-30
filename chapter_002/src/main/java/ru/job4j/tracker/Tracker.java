@@ -1,6 +1,11 @@
 package ru.job4j.tracker;
 
-import java.util.Random;
+import java.util.ArrayList;
+import java.util.Optional;
+import java.util.Set;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collectors;
+
 import static java.util.Arrays.*;
 
 /**
@@ -8,85 +13,75 @@ import static java.util.Arrays.*;
  * @since 0.1
  */
 public class Tracker {
-    private static final Random RN = new Random();
-    private final Item[] items = new Item[100];
-    private int position = 0;
+    private final ArrayList<Item> items = new ArrayList<>();
 
     /**
      * Метод реализующий добавление новой заявки в хранилище.
      * @param item новая заявка.
      */
-    public Item add(Item item) {
-        item.setId(this.generateId());
-        this.items[this.position++] = item;
-        return item;
-    }
-    /**
-     * Метод генерирует уникальный ключ заявки.
-     * @return уникальный ключ
-     */
-    private String generateId() {
-        return (String.valueOf(RN.nextInt() + System.currentTimeMillis()));
+    public void add(Item item) {
+        items.add(item);
     }
 
     /**
+     *
      * @param name which need to find in array item.
      * @return array with item which contain this.name.
      */
-    public Item[] findByName(String name) {
-        int l = 0;
-        Item[] result = new Item[position - 1];
-        for (int index = 0; index < position; index++) {
-            if (name.equals(items[index].getName())) {
-                result[l] = items[index];
-                l++;
-            }
-        }
-        return copyOf(result, l);
+    public ArrayList<Item> findByName(String name) {
+        return items.stream().filter(t -> name.equals(t.getName())).collect(Collectors.toCollection(ArrayList::new));
     }
 
     /**
+     * set
      * @param id that needs to find among array.
      * @return necessary object to required id.
      */
     public Item findById(String id) {
-        Item result = null;
-        for (int index = 0; index < position; index++) {
-            if (id.equals(items[index].getId())) {
-                result = items[index];
+        /*Item result = null;
+        if (id.length() == 13) {
+            for (Item item: items) {
+                if (id.equals(item.getId())) {
+                    result = item;
+                }
             }
-        }
-        return result;
+        }*/
+        return items.stream().filter(t -> id.equals(t.getId())).reduce((t, item1) -> item1 = t).orElse(null);
     }
 
     /**
-     * @return array without null element.
+     *
+     * @return array of items without null element.
      */
-    public Item[] findAll() {
-        Item[] result = new Item[position];
-        for (int index = 0; index < position; index++) {
-            result[index] = items[index];
-        }
-        return result;
+    public ArrayList<Item> getItems() {
+        return this.items;
     }
 
     /**
+     *
      * @param id element that necessary to replace
      * @param next element that necessary to place instead of element to Id
      */
     public void replace(String id, Item next) {
-        items[asList(items).indexOf(this.findById(id))] = next;
-
+        int i = (items.indexOf(this.findById(id)));
+        if (i != -1) {
+            items.remove(i);
+            items.add(i, next);
+        }
     }
 
     /**
+     *
      * @param id element to this id that need to delete.
      */
-    public void delete(String id) {
-        int index = asList(items).indexOf(this.findById(id));
-        System.arraycopy(
-                items, index + 1, items, index, position - index
-        );
-        position--;
+    public boolean delete(String id) {
+        boolean exist = true;
+        Item item = this.findById(id);
+        if ((item == null)) {
+            exist = false;
+        } else {
+            items.remove(items.indexOf(item));
+        }
+        return exist;
     }
 }

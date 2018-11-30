@@ -8,6 +8,7 @@ package ru.job4j.tictactoe;
 public class Logic3T {
     private boolean result = false;
     private final Figure3T[][] table;
+
     public Logic3T(Figure3T[][] table) {
         this.table = table;
     }
@@ -17,6 +18,7 @@ public class Logic3T {
      * @return if winner X then true else false.
      */
     public boolean isWinnerX() {
+        result = false;
         int cell = 0;
         for (int index = 0; index < table.length; index++) {
             if (table[index][index].hasMarkX()) {
@@ -48,6 +50,7 @@ public class Logic3T {
             }
         }
         for (Figure3T[] row : table) {
+            cell = 0;
             for (int index = row.length - 1; index >= 0; index--) {
                 if (row[index].hasMarkX()) {
                     cell++;
@@ -65,6 +68,7 @@ public class Logic3T {
      * @return if winner O then true else false.
      */
     public boolean isWinnerO() {
+        result = false;
         int cell = 0;
         for (int index = 0; index < table.length; index++) {
             if (table[index][index].hasMarkO()) {
@@ -96,6 +100,7 @@ public class Logic3T {
             }
         }
         for (Figure3T[] row : table) {
+            cell = 0;
             for (int index = row.length - 1; index >= 0; index--) {
                 if (row[index].hasMarkO()) {
                     cell++;

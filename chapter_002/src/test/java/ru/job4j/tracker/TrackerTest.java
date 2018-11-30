@@ -1,9 +1,9 @@
 package ru.job4j.tracker;
 
 import org.junit.Test;
-
+import java.util.ArrayList;
 import static org.hamcrest.core.Is.is;
-import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertThat;
 
 public class TrackerTest {
@@ -12,7 +12,7 @@ public class TrackerTest {
         Tracker tracker = new Tracker();
         Item item = new Item("test1", "testDescription");
         tracker.add(item);
-        assertThat(tracker.findAll()[0], is(item));
+        assertThat(tracker.getItems().get(0), is(item));
     }
     @Test
     public void whenReplaceNameThenReturnNewName() {
@@ -20,9 +20,9 @@ public class TrackerTest {
         Item previous = new Item("test1", "testDescription");
         tracker.add(previous);
         Item next = new Item("test2", "testDescription2");
-        next.setId(previous.getId());
         tracker.replace(previous.getId(), next);
-        assertThat(tracker.findById(previous.getId()).getName(), is("test2"));
+        ArrayList<Item> items = tracker.getItems();
+        assertThat(items.contains(next), is(true));
     }
     @Test
     public void whenAddNewItemThenFindNecessaryItemByName() {
@@ -37,9 +37,12 @@ public class TrackerTest {
         tracker.add(third);
         tracker.add(fourth);
         tracker.add(fifth);
-        Item[] expected = new Item[]{second, fourth, fifth};
-        Item[] result = tracker.findByName("test2");
-        assertArrayEquals(expected, result);
+        ArrayList<Item> expected = new ArrayList<>();
+        expected.add(second);
+        expected.add(fourth);
+        expected.add(fifth);
+        ArrayList<Item> result = tracker.findByName("test2");
+        assertEquals(expected, result);
     }
     @Test
     public void whenDeleteSecondNameThenReturnNull() {
@@ -55,6 +58,6 @@ public class TrackerTest {
         tracker.add(fourth);
         tracker.add(fifth);
         tracker.delete(second.getId());
-        assertThat(tracker.findAll()[1].getName(), is(third.getName()));
+        assertThat(tracker.getItems().get(1).getName(), is(third.getName()));
     }
 }

@@ -1,4 +1,4 @@
-package ru.job4j.figure;
+package ru.job4j.pseudo;
 
 /**
  * @author Yanbaev Marat (yanbaevms@gmail.com)
