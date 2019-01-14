@@ -19,7 +19,7 @@ public class PhoneDictionary {
      * @return Список подошедших пользователей.
      */
     public List<Person> find(String key) {
-        var result = person.stream().filter(p -> (p.getPhone().contains(key)
+        List<Person> result = person.stream().filter(p -> (p.getPhone().contains(key)
                 || p.getAddress().contains(key)
                 || p.getSurname().contains(key)
                 || p.getName().contains(key))
