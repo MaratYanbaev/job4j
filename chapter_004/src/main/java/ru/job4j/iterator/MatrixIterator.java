@@ -2,6 +2,11 @@ package ru.job4j.iterator;
 
 import java.util.Iterator;
 
+/**
+ * Итератор для двухмерного массива.
+ * @author Marat Yanbaev (yanbaevms@gmail.com)
+ * @since 15.01.2019
+ */
 public class MatrixIterator implements Iterator {
 
 private final int[][] it;
@@ -17,11 +22,19 @@ private int index = 0;
         }
     }
 
+    /**
+     *
+     * @return true if the iteration has more elements
+     */
     @Override
     public boolean hasNext() {
         return size > next;
     }
 
+    /**
+     *
+     * @return the next element in the iteration
+     */
     @Override
     public Object next() {
         if (index == it[row].length) {
