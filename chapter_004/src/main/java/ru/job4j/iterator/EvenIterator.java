@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 public class EvenIterator implements Iterator {
     private final int[] values;
     private int index = 0;
+    private int add = 0; // accumulator of steps to next even number
 
     public EvenIterator(final int[] values) {
         this.values = values;
@@ -20,7 +21,7 @@ public class EvenIterator implements Iterator {
      *
      * @return amount of steps to next even number
      */
-    private int searchNext() {
+    /*private int searchNext() {
         int result = -1;
         for (int i = index; i < values.length; i++) {
             result ++;
@@ -29,7 +30,7 @@ public class EvenIterator implements Iterator {
             }
         }
         return result;
-    }
+    }*/
 
     /**
      *
@@ -37,7 +38,14 @@ public class EvenIterator implements Iterator {
      */
     @Override
     public boolean hasNext() {
-        return values[index + searchNext()] % 2 == 0;
+        add = -1;
+        for (int i = index; i < values.length; i++) {
+            add ++;
+            if (values[i] % 2 == 0) {
+                break;
+            }
+        }
+        return values[index + add] % 2 == 0;
     }
 
     /**
@@ -47,10 +55,12 @@ public class EvenIterator implements Iterator {
      */
     @Override
     public Object next() {
-        index += searchNext();
-        if (index < values.length && values[index] % 2 != 0) {
+        /*index += searchNext();*/
+        /*if (index < values.length && values[index] % 2 != 0) {*/
+        if (!hasNext()) {
             throw new NoSuchElementException();
         } else {
+            index += add;
             return values[index++];
         }
     }
