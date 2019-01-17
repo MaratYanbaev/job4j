@@ -18,18 +18,26 @@ public class EvenIterator implements Iterator {
 
     /**
      *
-     * @return true if has next even number otherwise false.
+     * @return amount of steps to next even number
      */
-    @Override
-    public boolean hasNext() {
-        boolean result = false;
+    private int searchNext() {
+        int result = -1;
         for (int i = index; i < values.length; i++) {
+            result ++;
             if (values[i] % 2 == 0) {
-                result = true;
                 break;
             }
         }
         return result;
+    }
+
+    /**
+     *
+     * @return true if has next even number otherwise false.
+     */
+    @Override
+    public boolean hasNext() {
+        return values[index + searchNext()] % 2 == 0;
     }
 
     /**
@@ -39,16 +47,11 @@ public class EvenIterator implements Iterator {
      */
     @Override
     public Object next() {
-        int next = 0;
-        for (int i = index; i < values.length; i++) {
-            index++;
-            if (values[i] % 2 == 0) {
-                next = values[i];
-                break;
-            } else if (index == values.length) {
-                throw new NoSuchElementException();
-            }
+        index += searchNext();
+        if (index < values.length && values[index] % 2 != 0) {
+            throw new NoSuchElementException();
+        } else {
+            return values[index++];
         }
-        return next;
     }
 }
