@@ -97,5 +97,14 @@ public class IteratorOfIteratorsTest {
         assertThat(it.next(), is(3));
         it.next();
     }
+
+    @Test
+    public void hasOneNextShouldReturnFalseInCaseOfEmptyIterators() {
+        Iterator<Integer> it1 = (new ArrayList<Integer>()).iterator();
+        Iterator<Iterator<Integer>> its = Arrays.asList(it1).iterator();
+        Converter converter = new Converter();
+        it = converter.convert(its);
+        assertThat(it.hasNext(), is(false));
+    }
 }
 
