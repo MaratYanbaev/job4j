@@ -11,6 +11,7 @@ import java.util.NoSuchElementException;
 public class SimpleArray<T> implements Iterable<T> {
 
     private Object[] array;
+    private int index = 0;
 
     public SimpleArray(int size) {
         this.array = new Object[size];
@@ -22,18 +23,23 @@ public class SimpleArray<T> implements Iterable<T> {
      * @param model next new element
      */
     public void add(T model) {
-        for (int i = 0; i < array.length; i++) {
-            if (array[i] == null) {
-                array[i] = model;
-                break;
-            } else if (i == array.length - 1) {
-                throw new ArrayIndexOutOfBoundsException();
-            }
+//        for (int i = 0; i < array.length; i++) {
+//            if (array[i] == null) {
+//                array[i] = model;
+//                break;
+//            } else if (i == array.length - 1) {
+//                throw new ArrayIndexOutOfBoundsException();
+//            }
+//        }
+        if (index == array.length) {
+            throw new ArrayIndexOutOfBoundsException();
+        } else {
+            array[index++] = model;
         }
     }
 
     /**
-     *
+     * if setting index >= this.index then exception
      * @param index of value which need to replace
      * If index == or > then array's length then exception
      * @param model new element
@@ -41,28 +47,32 @@ public class SimpleArray<T> implements Iterable<T> {
     public void set(int index, T model) {
         if (index >= array.length) {
             throw new ArrayIndexOutOfBoundsException();
+        } else if (index >= this.index) {
+            throw new ArrayIndexOutOfBoundsException("setting index can't be >= amount of elements");
         } else {
             array[index] = model;
         }
     }
 
     /**
-     *
+     * if removed index >= this.index then exception
      * @param index of value which need to remove
      * If index == or > then array's length then exception
      */
     public void remove(int index) {
         if (index >= array.length) {
             throw new ArrayIndexOutOfBoundsException();
+        } else if (index >= this.index) {
+            throw new ArrayIndexOutOfBoundsException("index of selected element can't be >= amount of elements");
         } else {
             int amount = array.length - ++index;
             System.arraycopy(array, index, array, --index, amount);
-            array[array.length - 1] = null;
+            array[--this.index] = null;
         }
     }
 
     /**
-     *
+     * if getting index >= this.index then exception
      * @param index of value which need to get
      * If index == or > then array's length then exception
      * @return the value
@@ -70,6 +80,8 @@ public class SimpleArray<T> implements Iterable<T> {
     public T get(int index) {
         if (index >= array.length) {
             throw new ArrayIndexOutOfBoundsException();
+        } else if (index >= this.index) {
+            throw new ArrayIndexOutOfBoundsException("index of selected element can't be >= amount of elements");
         }
         return (T) array[index];
     }

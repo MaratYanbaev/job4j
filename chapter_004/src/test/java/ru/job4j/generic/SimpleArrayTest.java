@@ -40,7 +40,7 @@ public class SimpleArrayTest {
     }
 
     @Test(expected = ArrayIndexOutOfBoundsException.class)
-    public void tryToRemoveValueWhenIndexBiggerLengthThenException() {
+    public void tryRemoveValueWhenIndexBiggerLengthThenException() {
         it.remove(7);
     }
 
@@ -48,6 +48,18 @@ public class SimpleArrayTest {
     @Test(expected = ArrayIndexOutOfBoundsException.class)
     public void whenTryGetOneOfValueThenException() {
         it.get(8);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void whenRemoveValueThenGetException() {
+        it.remove(2);
+        it.get(6);
+    }
+
+    @Test
+    public void whenRemoveValueThenGetNext() {
+        it.remove(2);
+        assertThat(it.get(2), is(8));
     }
 
     @Test
@@ -60,19 +72,6 @@ public class SimpleArrayTest {
         it.set(6, 5);
         assertThat(it.get(6), is(5));
     }
-
-    @Test
-    public void whenRemoveValueThenGetNull() {
-        it.remove(2);
-        assertThat(it.get(6), is(nullValue()));
-    }
-
-    @Test
-    public void whenRemoveValueThenGetNext() {
-        it.remove(2);
-        assertThat(it.get(2), is(8));
-    }
-
 
     @Test(expected = NoSuchElementException.class)
     public void shouldReturnEvenNumbersSequentially() {
@@ -152,4 +151,49 @@ public class SimpleArrayTest {
         Iterator<Integer> em = empty.iterator();
         em.next();
     }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void replaceableElementShouldThrowArrayIndexOutOfBoundsException() {
+        SimpleArray<Integer> exc = new SimpleArray<>(5);
+        exc.add(2);
+        exc.add(3);
+        exc.add(6);
+
+        exc.set(3, 4);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void deletedElementShouldThrowArrayIndexOutOfBoundsException() {
+        SimpleArray<Integer> exc = new SimpleArray<>(5);
+        exc.add(2);
+        exc.add(3);
+        exc.add(6);
+
+        exc.remove(4);
+    }
+
+    @Test(expected = ArrayIndexOutOfBoundsException.class)
+    public void gettingElementShouldThrowArrayIndexOutOfBoundsException() {
+        SimpleArray<Integer> exc = new SimpleArray<>(5);
+        exc.add(2);
+        exc.add(3);
+        exc.add(6);
+
+        exc.remove(4);
+    }
+
+    @Test
+    public void invocationHasNextMethodOfFourthElementThenFalse() {
+        SimpleArray<Integer> exc = new SimpleArray<>(5);
+        exc.add(2);
+        exc.add(3);
+        exc.add(6);
+        Iterator<Integer> iterator  = exc.iterator();
+        iterator.next();
+        iterator.next();
+        iterator.next();
+
+        assertThat(iterator.hasNext(), is(false));
+    }
+
 }
