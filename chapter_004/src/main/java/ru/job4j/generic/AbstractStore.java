@@ -6,29 +6,47 @@ package ru.job4j.generic;
  */
 public abstract class AbstractStore<T extends Base> implements Store<T> {
 
-    private int size = 5;
-    private SimpleArray<T> store = new SimpleArray<>(size);
-    private int index;
+    private int quantity = 0; //the quantity of model in store
+    private int capacity = 5; //the store's capacity
+    private SimpleArray<T> store = new SimpleArray<>(capacity);
 
     /**
      *
-     * @param model - model that need to add to store
-     * If store is full then catch exception and
-     * raise store's capacity
+     * @param model - model that need to add in store
+     * If store is full (quantity == capacity) then
+     * need to raise store's capacity
      */
     @Override
     public void add(T model) {
-        try {
+        if (capacity > quantity) {
             store.add(model);
-        } catch (ArrayIndexOutOfBoundsException e) {
-            SimpleArray<T> buf = new SimpleArray<>(size + 5);
-            for (int i = 0; i < size; i++) {
+            quantity++;
+        } else {
+            capacity += 5;
+            SimpleArray<T> buf = new SimpleArray<>(capacity);
+            for (int i = 0; i < quantity; i++) {
                 buf.add(store.get(i));
             }
             store = buf;
             store.add(model);
-            size += 5;
+            quantity++;
         }
+    }
+
+    /**
+     *
+     * @param id model's id that need to find out one's index
+     * @return index if found otherwise -1
+     */
+    private int findIndex(String id) {
+        int index = 0;
+        for (T t : store) {
+            if (t.getId().equals(id)) {
+                break;
+            }
+            index++;
+        }
+        return index == quantity ? -1 : index;
     }
 
     /**
@@ -39,17 +57,9 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
      */
     @Override
     public boolean replace(String id, T model) {
-//        Первый вариант метода.
-//        int index = -1;
-//        for (T t : store) {
-//            index++;
-//            if (t.getId().equals(id)) {
-//                store.remove(index);
-//                return true;
-//            }
-//        }
         boolean result = false;
-        if (this.findById(id) != null) {
+        int index = this.findIndex(id);
+        if (index > -1) {
             store.set(index, model);
             result = true;
         }
@@ -63,17 +73,9 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
      */
     @Override
     public boolean delete(String id) {
-//        Первый вариант метода.
-//        int index = -1;
-//        for (T t : store) {
-//            index++;
-//            if (t.getId().equals(id)) {
-//                store.remove(index);
-//                return true;
-//            }
-//        }
         boolean result = false;
-        if (this.findById(id) != null) {
+        int index = this.findIndex(id);
+        if (index > -1) {
             store.remove(index);
             result = true;
         }
@@ -87,12 +89,10 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
      */
     @Override
     public T findById(String id) {
-        index = 0;
         for (T t : store) {
             if (t.getId().equals(id)) {
                 return t;
             }
-            index++;
         }
         return null;
     }
