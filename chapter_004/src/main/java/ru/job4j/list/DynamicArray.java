@@ -1,5 +1,6 @@
 package ru.job4j.list;
 
+import java.util.Arrays;
 import java.util.ConcurrentModificationException;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -23,11 +24,9 @@ public class DynamicArray<T> implements Iterable<T> {
     private int quantity = 0;
 
     private void grow() {
-        Object[] buf = new Object[quantity + 10];
-        for (int i = 0; i < quantity; i++) {
-            buf[i] = array[i];
+        if (quantity >= array.length) {
+            array = Arrays.copyOf(array, quantity + 10);
         }
-        array = buf;
     }
 
     /**
@@ -36,13 +35,9 @@ public class DynamicArray<T> implements Iterable<T> {
      * @param model - next new element
      */
     public void add(T model) {
+        grow();
         modCount++;
-        if (quantity >= array.length) {
-            grow();
-            array[quantity++] = model;
-        } else {
-            array[quantity++] = model;
-        }
+        array[quantity++] = model;
     }
 
     /**
@@ -81,10 +76,10 @@ public class DynamicArray<T> implements Iterable<T> {
             @Override
             public T next() {
                 checkModification();
-                if (hasNext()) {
-                    return (T) array[cursor++];
-                } else {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
+                } else {
+                    return (T) array[cursor++];
                 }
             }
 
