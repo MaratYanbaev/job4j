@@ -58,6 +58,7 @@ public class SimpleLinkedList<T> implements Iterable<T> {
         return new Iterator<T>() {
             int cursor = 0; // index of next element to return
             private int expectedModCount = modCount;
+            SimpleLinkedList.Node<T> buf;
 
             /**
              * @return true if the iteration has more elements
@@ -75,11 +76,15 @@ public class SimpleLinkedList<T> implements Iterable<T> {
             @Override
             public T next() {
                 checkModification();
-                if (hasNext()) {
-                    return (T) get(cursor++);
-                } else {
+                if (!hasNext()) {
                     throw new NoSuchElementException();
+                } else if (cursor < 1) {
+                    buf = first;
+                } else {
+                    buf = buf.next;
                 }
+                cursor++;
+                return (T) buf.date;
             }
 
             /**
