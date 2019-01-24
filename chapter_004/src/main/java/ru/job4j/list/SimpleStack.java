@@ -3,20 +3,18 @@ package ru.job4j.list;
 import org.w3c.dom.Node;
 
 /**
+ * 5.3.3. Используя контейнер на базе связанного списка создать контейнер Stack[#105791]
  * @author Marat Yanbaev (yanbaevms@gmail.com)
  * @since 22.01.2019
  */
 public class SimpleStack<T> {
 
     private SimpleLinkedList<T> sll = new SimpleLinkedList<>();
-    private int size;
-    private int cursor;
 
     /**
      * Метод вставляет в начало списка данные.
      */
     public void push(T date) {
-        this.size++;
         sll.add(date);
     }
 
@@ -24,15 +22,8 @@ public class SimpleStack<T> {
      *
      * @return null if array empty otherwise T date
      */
-    public T poll() {
-        T result = null;
-        if (size > 0) {
-            result = sll.get(cursor++);
-            if (cursor == size) {
-                size = 0;
-                cursor = 0;
-            }
+        public T poll() {
+            return sll.remove();
         }
-        return result;
-    }
+
 }

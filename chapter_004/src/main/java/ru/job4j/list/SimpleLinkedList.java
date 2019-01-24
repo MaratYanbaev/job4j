@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 /**
+ * 5.3.2. Создать контейнер на базе связанного списка [#105793]
  * @author Marat Yanbaev (yanbaevms@gmail.com)
  * @since 22.01.2019
  */
@@ -38,6 +39,17 @@ public class SimpleLinkedList<T> implements Iterable<T> {
             result = result.next;
         }
         return result.date;
+    }
+
+    public T remove() {
+        T result = null;
+        if (size > 0) {
+            result = first.date;
+            Node<T> buf = first;
+            first = buf.next;
+            size--;
+        }
+        return result;
     }
 
     /**

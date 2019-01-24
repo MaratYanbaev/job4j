@@ -1,6 +1,7 @@
 package ru.job4j.list;
 
 /**
+ * 5.3.3.1 Очередь на двух стеках[#105794]
  * @author Marat Yanbaev (yanbaevms@gmail.com)
  * @since 22.01.2019
  */
@@ -31,8 +32,7 @@ public class SimpleQueue<T> {
             cursor = size;
             size = 0;
         }
-
         cursor--;
-        return cursor < 0 ? null : sllTwo.poll();
+        return sllTwo.poll();
     }
 }

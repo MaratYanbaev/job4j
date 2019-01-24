@@ -4,11 +4,12 @@ import org.junit.Before;
 import org.junit.Test;
 
 import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.nullValue;
 import static org.junit.Assert.*;
 
 public class SimpleQueueTest {
 
-    SimpleQueue<Integer> sq;
+    private SimpleQueue<Integer> sq;
 
     @Before
     public void setUp() {
@@ -36,6 +37,7 @@ public class SimpleQueueTest {
         assertThat(sq.poll(), is(4));
         assertThat(sq.poll(), is(5));
         assertThat(sq.poll(), is(6));
+        assertThat(sq.poll(), is(nullValue()));
     }
 
 }
