@@ -12,10 +12,21 @@ public class NodeLoop {
      * @return - if list has hasCycle true otherwise false
      */
     public boolean hasCycle(Node first) {
-        Node buf = first;
-        while (buf.next != first && buf.next != null) {
-            buf = buf.next;
+        boolean result = false;
+        Node fast = first;
+        Node slow = first;
+        while (fast.next != first && fast.next != null && !result) {
+            for (int i = 2; i > 0; i--) {
+                fast = fast.next;
+                if (fast.next == first) {
+                    result = true;
+                } else if (fast == slow || fast.next == null) {
+                    return result;
+                }
+
+            }
+            slow = slow.next;
         }
-        return buf.next != null;
+        return result;
     }
 }
