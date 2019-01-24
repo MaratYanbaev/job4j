@@ -1,48 +1,30 @@
 package ru.job4j.list;
 
+import org.w3c.dom.Node;
+
 /**
  * @author Marat Yanbaev (yanbaevms@gmail.com)
  * @since 22.01.2019
  */
-public class SimpleStack<E> {
+public class SimpleStack<T> {
 
+    private SimpleLinkedList<T> sll = new SimpleLinkedList<>();
     private int size;
-    private Node<E> first;
+    private int cursor;
 
     /**
      * Метод вставляет в начало списка данные.
      */
-    public void push(E date) {
-        Node<E> newLink = new Node<>(date);
-        newLink.next = this.first;
-        this.first = newLink;
+    public void push(T date) {
         this.size++;
+        sll.add(date);
     }
 
     /**
      *
-     * @return null if it doesn't has any element otherwise E date
+     * @return null if array empty otherwise T date
      */
-    public E poll() {
-        Node<E> result = new Node<>(null);
-        if (first != null) {
-            result = first;
-            first = first.next;
-            size--;
-        }
-        return result.date;
-    }
-
-    /**
-     * Класс предназначен для хранения данных.
-     */
-    private static class Node<E> {
-
-        E date;
-        Node<E> next;
-
-        Node(E date) {
-            this.date = date;
-        }
+    public T poll() {
+        return size > cursor ? sll.get(cursor++) : null;
     }
 }
