@@ -2,6 +2,7 @@ package ru.job4j.map;
 
 import java.util.Calendar;
 import java.util.Objects;
+import java.util.Random;
 
 /**
  * 1. Создать модель User[#105811]
@@ -27,9 +28,23 @@ public class UserForMap {
 
     @Override
     public int hashCode() {
-        int result = 11;
-        result = result * 31 + name.hashCode();
-        result = result * 31 + children;
-        return result;
+//        int result = 11;
+//        result = result * 31 + name.hashCode();
+//        result = result * 31 + children;
+//        return result;
+        return (int) (Math.random() * 10000);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
+        UserForMap user = (UserForMap) o;
+        return children == user.children
+                && Objects.equals(name, user.name);
     }
 }
