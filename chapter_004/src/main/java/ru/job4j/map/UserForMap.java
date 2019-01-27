@@ -28,11 +28,10 @@ public class UserForMap {
 
     @Override
     public int hashCode() {
-//        int result = 11;
-//        result = result * 31 + name.hashCode();
-//        result = result * 31 + children;
-//        return result;
-        return (int) (Math.random() * 10000);
+        int result = 11;
+        result = result * 31 + name.hashCode();
+        result = result * 31 + children;
+        return result;
     }
 
     @Override
