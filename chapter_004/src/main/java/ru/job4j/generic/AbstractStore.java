@@ -52,7 +52,7 @@ public abstract class AbstractStore<T extends Base> implements Store<T> {
     /**
      *
      * @param id is model's id that need to change
-     * @param model - model that need to set instead of found id
+     * @param model - model that need to map instead of found id
      * @return if id is replaced true otherwise false
      */
     @Override

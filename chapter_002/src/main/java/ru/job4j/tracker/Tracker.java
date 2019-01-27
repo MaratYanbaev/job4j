@@ -33,7 +33,7 @@ public class Tracker {
     }
 
     /**
-     * set
+     * map
      * @param id that needs to find among array.
      * @return necessary object to required id.
      */
