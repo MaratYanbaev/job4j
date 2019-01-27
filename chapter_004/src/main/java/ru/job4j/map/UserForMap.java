@@ -1,6 +1,7 @@
 package ru.job4j.map;
 
 import java.util.Calendar;
+import java.util.Objects;
 
 /**
  * 1. Создать модель User[#105811]
@@ -22,5 +23,13 @@ public class UserForMap {
     public UserForMap(String name, int children) {
         this.name = name;
         this.children = children;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = 11;
+        result = result * 31 + name.hashCode();
+        result = result * 31 + children;
+        return result;
     }
 }
