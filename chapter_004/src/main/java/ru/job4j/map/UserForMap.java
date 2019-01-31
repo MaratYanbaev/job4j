@@ -2,7 +2,6 @@ package ru.job4j.map;
 
 import java.util.Calendar;
 import java.util.Objects;
-import java.util.Random;
 
 /**
  * 1. Создать модель User[#105811]
@@ -28,10 +27,10 @@ public class UserForMap {
 
     @Override
     public int hashCode() {
-        int result = 11;
+        int result = 3;
         result = result * 31 + name.hashCode();
         result = result * 31 + children;
-        return result;
+        return Math.abs(result);
     }
 
     @Override
