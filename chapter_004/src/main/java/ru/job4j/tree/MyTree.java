@@ -10,6 +10,13 @@ import java.util.*;
  * В дереве не могут быть дубликатов, т.е. никакие узлы в дереве не должны иметь двух одинаковых дочерних узлов.
  * Обязательно реализуйте итератор.
  *
+ * 2. Добавить метод boolean isBinary()[#105825]
+ * Добавить метод boolean isBinary().
+ * Метод должен проверять количество дочерних элементов в дереве.
+ *     Если их <= 2 - то дерево бинарное.
+ * Метод должен циклически пройти по всем элементам дерева.
+ *     Для этого можно использовать итератор из предыдущего задания.
+ *
  * @author Marat Yanbaev (yanbaevms@gmail.com)
  * @since 02.02.2019
  */
@@ -18,6 +25,22 @@ public class MyTree<E extends Comparable<E>> implements SimpleTree<E> {
 
     public MyTree(E i) {
         root = new Node<>(i);
+    }
+
+    public boolean isBinary() {
+        Queue<Node<E>> queue = new LinkedList<>();
+        queue.offer(this.root);
+        while (!queue.isEmpty()) {
+            Node<E> el = queue.poll();
+            int size = el.branch().size();
+            if (size > 2) {
+                return false;
+            }
+            for (Node<E> child : el.branch()) {
+                queue.offer(child);
+            }
+        }
+        return true;
     }
 
     @Override
