@@ -87,4 +87,19 @@ public class MyTreeTest {
                 is(true)
         );
     }
+
+    @Test
+    public void checkIterator() {
+        MyTree<Integer> tree = new MyTree<>(1);
+        tree.add(1, 2);
+        tree.add(1, 3);
+        tree.add(1, 4);
+        tree.add(4, 5);
+        tree.add(5, 6);
+        Iterator iterator = tree.iterator();
+
+        while (iterator.hasNext()) {
+            System.out.println(iterator.next());
+        }
+    }
 }

@@ -21,6 +21,7 @@ import java.util.*;
  * @since 02.02.2019
  */
 public class MyTree<E extends Comparable<E>> implements SimpleTree<E> {
+
     private Node<E> root;
 
     public MyTree(E i) {
@@ -76,35 +77,29 @@ public class MyTree<E extends Comparable<E>> implements SimpleTree<E> {
 
     @Override
     public Iterator<E> iterator() {
-
         Queue<Node<E>> queue = new LinkedList<>();
-        ArrayList<E> list = new ArrayList<>();
         queue.offer(this.root);
-        while (!queue.isEmpty()) {
-            Node<E> el = queue.poll();
-            list.add(el.getValue());
-            for (Node<E> child : el.branch()) {
-                queue.offer(child);
+
+        return new Iterator<E>() {
+
+            @Override
+            public boolean hasNext() {
+                return !queue.isEmpty();
             }
-        }
 
-        return list.iterator();
-
-//        return new Iterator<E>() {
-//
-//            @Override
-//            public boolean hasNext() {
-//                return iterator.hasNext();
-//            }
-//
-//            @Override
-//            public E next() {
-//                if (!(hasNext())) {
-//                    throw new NoSuchElementException();
-//                }
-//                return iterator.next();
-//            }
-//        };
+            @Override
+            public E next() {
+                if (!(hasNext())) {
+                    throw new NoSuchElementException();
+                } else {
+                    Node<E> el = queue.poll();
+                    for (Node<E> child : el.branch()) {
+                        queue.offer(child);
+                    }
+                    return el.getValue();
+                }
+            }
+        };
     }
 }
 
