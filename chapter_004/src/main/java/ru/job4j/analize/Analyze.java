@@ -1,6 +1,10 @@
 package ru.job4j.analize;
 
+import com.sun.source.tree.IfTree;
+
+import java.util.Map;
 import java.util.List;
+import java.util.Objects;
 import java.util.Random;
 
 /**
@@ -15,12 +19,13 @@ public class Analyze {
      * @param current - измененная коллекция.
      * @return - информацию об изменениях в исходной коллекции.
      */
-    public Info diff(List<User> previous, List<User> current) {
+    public Info diff(List<User> previous, Map<String, Analyze.User> current) {
         int old = 0;
         int changed = 0;
         int added, delete;
         for (User out: previous) {
-            for (User inner: current) {
+            User inner = current.get(out.getId());
+            if (inner != null) {
                 if (out.getId().equals(inner.getId())) {
                     old++;
                     if (!(out.getName().equals(inner.getName()))) {
@@ -59,6 +64,23 @@ public class Analyze {
 
         public void newName(String name) {
             this.name = name;
+        }
+
+        @Override
+        public boolean equals(Object o) {
+            if (this == o) {
+                return true;
+            }
+            if (o == null || getClass() != o.getClass()) {
+                return false;
+            }
+            User user = (User) o;
+            return Objects.equals(id, user.id);
+        }
+
+        @Override
+        public int hashCode() {
+            return Objects.hash(id);
         }
     }
 

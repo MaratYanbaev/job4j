@@ -7,14 +7,16 @@ import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class AnalyzeTest {
 
     private Analyze.Info info;
     private Analyze analyze  = new Analyze();
     private List<Analyze.User> previous;
-    private List<Analyze.User> current;
+    private Map<String, Analyze.User> current;
 
     @Before
     public void setUp() {
@@ -30,16 +32,17 @@ public class AnalyzeTest {
         previous.add(four);
         previous.add(five);
 
-        current = new ArrayList<>();
+        current = new HashMap<>();
         for (Analyze.User user: previous) {
-            current.add(new Analyze.User(user));
+            current.put(user.getId(), new Analyze.User(user));
         }
     }
 
     @Test
     public void deleteSomeElements() {
-        current.remove(1);
-        current.remove(3);
+        current.remove(previous.get(1).getId());
+        current.remove(previous.get(3).getId());
+
         info = analyze.diff(previous, current);
 
         assertThat(info.getDeleted(), is(2));
@@ -47,8 +50,9 @@ public class AnalyzeTest {
 
     @Test
     public void changeSomeElements() {
-        current.get(0).newName("Zheny");
-        current.get(4).newName("Oly");
+        current.get(previous.get(0).getId()).newName("Zheny");
+        current.get(previous.get(4).getId()).newName("Oly");
+
         info = analyze.diff(previous, current);
 
         assertThat(info.getChanged(), is(2));
@@ -56,12 +60,16 @@ public class AnalyzeTest {
 
     @Test
     public void deleteChangeAddElementsThenResultGetChanges() {
-        current.get(4).newName("Oly");
-        current.remove(1);
-        current.remove(2);
-        current.add(new Analyze.User("Fedy"));
-        current.add(new Analyze.User("Roma"));
-        current.add(new Analyze.User("Egor"));
+        current.get(previous.get(4).getId()).newName("Oly");
+        current.remove(previous.get(1).getId());
+        current.remove(previous.get(2).getId());
+        Analyze.User one = new Analyze.User("Fedy");
+        Analyze.User two = new Analyze.User("Roma");
+        Analyze.User free = new Analyze.User("Egor");
+        current.put(one.getId(), one);
+        current.put(two.getId(), two);
+        current.put(free.getId(), free);
+
         info = analyze.diff(previous, current);
 
         assertThat(info.getDeleted(), is(2));
