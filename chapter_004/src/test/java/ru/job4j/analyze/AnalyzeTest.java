@@ -16,7 +16,7 @@ public class AnalyzeTest {
     private Analyze.Info info;
     private Analyze analyze  = new Analyze();
     private List<Analyze.User> previous;
-    private Map<String, Analyze.User> current;
+    private List<Analyze.User> current;
 
     @Before
     public void setUp() {
@@ -32,16 +32,16 @@ public class AnalyzeTest {
         previous.add(four);
         previous.add(five);
 
-        current = new HashMap<>();
+        current = new ArrayList<>();
         for (Analyze.User user: previous) {
-            current.put(user.getId(), new Analyze.User(user));
+            current.add(new Analyze.User(user));
         }
     }
 
     @Test
     public void deleteSomeElements() {
-        current.remove(previous.get(1).getId());
-        current.remove(previous.get(3).getId());
+        current.remove(1);
+        current.remove(1);
 
         info = analyze.diff(previous, current);
 
@@ -50,8 +50,8 @@ public class AnalyzeTest {
 
     @Test
     public void changeSomeElements() {
-        current.get(previous.get(0).getId()).newName("Zheny");
-        current.get(previous.get(4).getId()).newName("Oly");
+        current.get(0).newName("Zheny");
+        current.get(4).newName("Oly");
 
         info = analyze.diff(previous, current);
 
@@ -59,16 +59,13 @@ public class AnalyzeTest {
     }
 
     @Test
-    public void deleteChangeAddElementsThenResultGetChanges() {
-        current.get(previous.get(4).getId()).newName("Oly");
-        current.remove(previous.get(1).getId());
-        current.remove(previous.get(2).getId());
-        Analyze.User one = new Analyze.User("Fedy");
-        Analyze.User two = new Analyze.User("Roma");
-        Analyze.User free = new Analyze.User("Egor");
-        current.put(one.getId(), one);
-        current.put(two.getId(), two);
-        current.put(free.getId(), free);
+    public void deleteChangeAddElementsThenGetChanges() {
+        current.get(4).newName("Oly");
+        current.remove(1);
+        current.remove(2);
+        current.add(new Analyze.User("Fedy"));
+        current.add(new Analyze.User("Roma"));
+        current.add(new Analyze.User("Egor"));
 
         info = analyze.diff(previous, current);
 

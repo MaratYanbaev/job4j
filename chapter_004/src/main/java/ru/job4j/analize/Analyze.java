@@ -1,11 +1,7 @@
 package ru.job4j.analize;
 
-import com.sun.source.tree.IfTree;
 
-import java.util.Map;
-import java.util.List;
-import java.util.Objects;
-import java.util.Random;
+import java.util.*;
 
 /**
  * @author Marat Yanbaev (yanbaevms@gmail.com)
@@ -19,25 +15,24 @@ public class Analyze {
      * @param current - измененная коллекция.
      * @return - информацию об изменениях в исходной коллекции.
      */
-    public Info diff(List<User> previous, Map<String, Analyze.User> current) {
-        int old = 0;
+    public Info diff(List<User> previous, List<User> current) {
+        Map<String, User> map = new HashMap<>();
+        for (Analyze.User user: current) {
+            map.put(user.getId(), new Analyze.User(user));
+        }
+        int deleted = 0;
         int changed = 0;
-        int added, delete;
         for (User out: previous) {
-            User inner = current.get(out.getId());
+            User inner = map.remove(out.getId());
             if (inner != null) {
-                if (out.getId().equals(inner.getId())) {
-                    old++;
-                    if (!(out.getName().equals(inner.getName()))) {
-                        changed++;
-                        old--;
-                    }
+                if ((!out.getName().equals(inner.getName()))) {
+                    changed++;
                 }
+            } else {
+                deleted++;
             }
         }
-        added = current.size() - old - changed;
-        delete = previous.size() - old - changed;
-        return new Info(added, changed, delete);
+        return new Info(map.size(), changed, deleted);
     }
 
     public static class User {
