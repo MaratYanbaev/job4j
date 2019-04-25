@@ -14,7 +14,7 @@ public class FilterWordTest {
     public void set() {
         filterWord = new FilterWord();
         file = new File("excerpt");
-        set = new String[]{"время", "зима", "ветер", "лишь", "поохотиться", "Только", "спит"};
+        set = new String[]{"время", "Зима", "ветер", "лишь", "поохотиться", "Только", "Спит"};
     }
 
     @Test
